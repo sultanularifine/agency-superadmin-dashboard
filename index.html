@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sultanul Arifine | Web Developer & CEO</title>
+    <title>Sultanul Arifinee | Web Developer & CEO</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -16,8 +16,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
         rel="stylesheet">
-
-
 
     <style>
         * {
@@ -54,31 +52,7 @@
             background: rgba(15, 23, 42, 0.2);
         }
 
-        /* Modern Header Style */
-        .section-header {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 10px;
-            margin-bottom: 40px;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            letter-spacing: -0.05em;
-            text-transform: uppercase;
-        }
-
-        .section-header .line {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: #ff4d4d;
-            border-radius: 2px;
-        }
-
+        /* Cursor */
         #cursor-dot {
             position: fixed;
             width: 8px;
@@ -101,21 +75,7 @@
             transform: translate(-50%, -50%);
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease-out;
-        }
-
-        .skill-badge {
-            @apply px-3 py-1 rounded-lg text-[10px] font-mono border border-primary/20 bg-primary/5 uppercase tracking-tighter;
-        }
-
-        .magnetic-btn {
-            display: inline-block;
-        }
-
-        /* Floating Social Dock */
+        /* Social Dock */
         .social-dock {
             position: fixed;
             right: 2px;
@@ -167,41 +127,25 @@
             transform: translateX(0);
         }
 
-        /* Icons styling */
         .dock-item svg {
             width: 24px;
             height: 24px;
             fill: currentColor;
         }
 
-        .swiper-pagination-bullet {
-            background: #ff4d4d !important;
-            /* Your primary color */
-            opacity: 0.3;
+        /* Custom Sidebar Scrollbar */
+        #dashboard-sidebar div::-webkit-scrollbar {
+            width: 3px;
         }
 
-        .swiper-pagination-bullet-active {
-            opacity: 1;
-            width: 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
+        #dashboard-sidebar div::-webkit-scrollbar-thumb {
+            background: #ff4d4d33;
+            border-radius: 10px;
         }
 
-        #menu-btn {
-            font-size: 1.25rem;
-            /* slightly bigger hamburger */
-            line-height: 1;
-            margin-top: 10px;
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @media (min-width: 1024px) {
-            #menu-btn {
-                display: none !important;
-                /* hide on desktop */
-            }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
         }
     </style>
 </head>
@@ -211,709 +155,173 @@
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
     <div id="canvas-container"></div>
+    <div id="header"></div>
 
-    <nav class="fixed w-full z-50 px-4 md:px-12 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center glass p-4 rounded-2xl">
-            <span class="text-xl font-extrabold tracking-tighter text-primary uppercase">Arifine<span
-                    class="text-slate-400 dark:text-white">.dev</span></span>
 
-            <div
-                class="hidden lg:flex items-center space-x-6 text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">
-                <a href="index.html" class="hover:text-primary transition magnetic-btn">Home</a>
-                <a href="services.html" class="hover:text-primary transition magnetic-btn">Services</a>
-                <a href="portfolio.html" class="hover:text-primary transition magnetic-btn">Portfolio</a>
-                <a href="courses.html" class="hover:text-primary transition magnetic-btn">Courses</a>
+    <main class="pt-32 pb-24 px-4 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
 
-                <div class="relative group">
-                    <a href="academy.html"
-                        class="flex items-center gap-1 hover:text-primary transition magnetic-btn uppercase font-bold text-[10px] tracking-[0.2em]">
-                        Academy
-                        <span class="text-[8px] transition-transform group-hover:rotate-180">▼</span>
-                    </a>
-                    <div
-                        class="absolute top-full left-0 mt-2 w-40 glass rounded-xl border border-white/5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-2xl overflow-hidden">
-                        <div class="flex flex-col py-2">
-                            <a href="internship.html"
-                                class="px-4 py-2 hover:bg-primary/20 hover:text-primary transition-colors border-b border-white/5 text-[10px] uppercase font-bold tracking-widest">Internship</a>
-                            <a href="ambassador.html"
-                                class="px-4 py-2 hover:bg-primary/20 hover:text-primary transition-colors text-[10px] uppercase font-bold tracking-widest">Ambassador</a>
-                        </div>
-                    </div>
-                </div>
+        <div id="sidebar"></div>
 
-                <a href="about.html" class="hover:text-primary transition magnetic-btn">About</a>
-                <a href="contact.html" class="hover:text-primary transition magnetic-btn">Contact</a>
-            </div>
+        <div class="flex-1 space-y-8">
 
-            <div class="flex items-center space-x-4">
-                <button id="theme-toggle" class="p-2.5 rounded-xl glass hover:border-primary magnetic-btn">🌓</button>
-                <a href="enrill-form.html"
-                    class="bg-primary px-5 py-3.5 font-bold text-[11px] uppercase rounded-xl glass shadow-lg hover:border-primary magnetic-btn text-white">Register</a>
-            </div>
-        </div>
-    </nav>
-    <!-- Toggle Button -->
-    <button id="menu-btn"
-        class="fixed top-24  z-[60] p-3 rounded-xl glass hover:border-primary magnetic-btn text-xl shadow-lg lg:hidden">
-        ☰
-    </button>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu"
-        class="hidden fixed left-4 top-[150px] z-50 glass rounded-2xl p-6 flex-col gap-5 text-[10px] font-bold uppercase tracking-widest border border-white/10 shadow-2xl">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="courses.html">Courses</a>
-
-        <div class="flex flex-col gap-2">
-            <div class="flex justify-between items-center w-full">
-                <a href="academy.html" class="hover:text-primary transition-colors">Academy</a>
-                <button onclick="document.getElementById('academy-sub').classList.toggle('hidden')"
-                    class="p-2 glass rounded-lg text-[8px]">▼</button>
-            </div>
-            <div id="academy-sub" class="hidden flex flex-col gap-4 pl-4 mt-2 border-l border-primary/30">
-                <a href="internship.html" class="opacity-80">Internship</a>
-                <a href="ambassador.html" class="opacity-80">Ambassador</a>
-            </div>
-        </div>
-
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+          <div class="mt-16 mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Market <span class="text-primary">Intelligence</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Predictive Analytics, Revenue Mapping & Growth Trajectories</p>
     </div>
-
-    <div class="social-dock">
-        <a href="https://wa.me/8801766359998" target="_blank"
-            class="glass dock-item text-green-500 hover:bg-green-500 hover:text-white flex items-center gap-2 px-3 py-2 rounded-lg">
-            <!-- WhatsApp Name -->
-            <span class="dock-name text-[10px] font-bold uppercase leading-none">WhatsApp</span>
-
-            <!-- WhatsApp Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 fill-current flex-shrink-0">
-                <path
-                    d="M12.04 0C5.37 0 0 5.37 0 12c0 2.11.55 4.08 1.51 5.82L0 24l6.42-1.69C8.2 23.45 10.09 24 12.04 24c6.67 0 12.04-5.37 12.04-12 0-6.63-5.37-12-12.04-12zm0 21.9c-2.07 0-4-.55-5.65-1.52l-.4-.23-3.8 1 1-3.77-.24-.4C2.64 15.95 2.09 14.07 2.09 12c0-5.48 4.46-9.94 9.95-9.94 5.48 0 9.94 4.46 9.94 9.95 0 5.49-4.46 9.95-9.95 9.95zm5.43-7.5c-.29-.14-1.7-.85-1.97-.94-.27-.09-.49-.14-.71.14-.21.28-.8.95-.98 1.14-.18.2-.36.22-.66.07-.29-.15-1.23-.42-2.34-1.34-.86-.77-1.44-1.73-1.6-2-.17-.27-.02-.42.12-.55.14-.13.27-.32.4-.48.13-.16.17-.27.26-.44.08-.18.04-.32-.02-.44-.06-.12-.61-1.46-.83-2-.22-.54-.44-.46-.61-.46-.17 0-.34-.02-.51-.02s-.44.06-.67.32c-.22.25-.85.85-.85 2.07s.89 2.39 1.02 2.56c.13.16 2.18 3.35 5.31 4.7.75.32 1.33.51 1.78.66.74.24 1.41.2 1.94.13.59-.09 1.57-.64 1.79-1.27.21-.63.21-1.16.15-1.28-.06-.12-.23-.18-.5-.32z" />
-            </svg>
-        </a>
-
-        <a href="https://linkedin.com/in/sultanularifine" target="_blank"
-            class="glass dock-item text-blue-400 hover:bg-blue-600 hover:text-white">
-            <span class="dock-name">LinkedIn</span>
-            <svg viewBox="0 0 24 24">
-                <path
-                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-            </svg>
-        </a>
-
-        <a href="https://www.facebook.com/sultanularifine.official" target="_blank"
-            class="glass dock-item text-blue-500 hover:bg-blue-500 hover:text-white">
-            <span class="dock-name">Facebook</span>
-            <svg viewBox="0 0 24 24">
-                <path
-                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-            </svg>
-        </a>
-
-        <a href="https://github.com/sultanularifine" target="_blank"
-            class="glass dock-item text-gray-800 hover:bg-gray-800 hover:text-white">
-            <span class="dock-name">GitHub</span>
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path
-                    d="M12 .296c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.016-2.04-3.338.724-4.042-1.612-4.042-1.612-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.84 1.236 1.84 1.236 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.304.762-1.604-2.665-.3-5.466-1.332-5.466-5.931 0-1.31.468-2.381 1.235-3.222-.123-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.301 1.23a11.52 11.52 0 0 1 3.003-.404c1.018.005 2.043.138 3.003.404 2.291-1.552 3.297-1.23 3.297-1.23.654 1.653.242 2.873.119 3.176.77.841 1.233 1.912 1.233 3.222 0 4.609-2.804 5.628-5.476 5.921.43.37.814 1.102.814 2.222 0 1.604-.015 2.896-.015 3.286 0 .319.216.694.825.576C20.565 22.092 24 17.592 24 12.296c0-6.627-5.373-12-12-12" />
-            </svg>
-        </a>
-
-        <a href="portfolio.html" class="glass dock-item text-primary hover:bg-primary hover:text-white">
-            <span class="dock-name">View Portfolio</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-            </svg>
-        </a>
+    <div class="flex gap-3">
+        <select class="glass border-white/5 bg-white/5 px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest text-white/60 outline-none italic">
+            <option>Last 30 Days</option>
+            <option>Q1 2026</option>
+        </select>
     </div>
+</div>
 
-    <header id="home" class="relative min-h-screen flex items-center px-6 md:px-24 pt-20">
-        <div class="grid lg:grid-cols-2 gap-12 w-full items-center">
-            <div class="z-10 reveal">
-
-                <h3 class="text-primary font-mono text-sm mb-4 tracking-widest uppercase">Empowering Digital Excellence
-                </h3>
-                <h1 class="text-6xl font-black mb-6 leading-tight">
-                    <span id="typed-text"></span>
-                </h1>
-                <p class="text-sm opacity-60 mb-10 max-w-lg leading-relaxed">We provide high-end web solutions and
-                    creative designs to help businesses grow in the digital era. Join our community of 10K+ satisfied
-                    clients.</p>
-                <div class="flex gap-4">
-                    <a href="#programs"
-                        class="px-8 py-4 bg-primary text-white font-black rounded-xl shadow-xl hover:scale-105 transition-all text-xs uppercase">Get
-                        Started</a>
-                    <a href="#portfolio"
-                        class="px-8 py-4 glass border border-white/10 font-black rounded-xl hover:bg-white/5 transition-all text-xs uppercase">Our
-                        Work</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <section id="services" class="py-24 px-6 md:px-24">
-        <div class="max-w-7xl mx-auto">
-            <div class="section-header reveal">
-                <h2>Our Core Services</h2>
-                <div class="line"></div>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass p-8 rounded-3xl hover:border-primary transition group reveal">
-                    <div class="text-3xl mb-4 group-hover:scale-110 transition">💻</div>
-                    <h4 class="text-xl font-bold mb-2">Web Development</h4>
-                    <p class="text-xs opacity-60">Laravel, React, and high-performance backend solutions.</p>
-                </div>
-                <div class="glass p-8 rounded-3xl hover:border-primary transition group reveal">
-                    <div class="text-3xl mb-4 group-hover:scale-110 transition">🎨</div>
-                    <h4 class="text-xl font-bold mb-2">WordPress</h4>
-                    <p class="text-xs opacity-60">Custom themes and Elementor expert designs.</p>
-                </div>
-                <div class="glass p-8 rounded-3xl hover:border-primary transition group reveal">
-                    <div class="text-3xl mb-4 group-hover:scale-110 transition">✒️</div>
-                    <h4 class="text-xl font-bold mb-2">Graphic Design</h4>
-                    <p class="text-xs opacity-60">Logo, UI/UX, and professional branding assets.</p>
-                </div>
-                <div class="glass p-8 rounded-3xl hover:border-primary transition group reveal">
-                    <div class="text-3xl mb-4 group-hover:scale-110 transition">🚀</div>
-                    <h4 class="text-xl font-bold mb-2">Digital Marketing</h4>
-                    <p class="text-xs opacity-60">SEO, SMM, and targeted growth strategies.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="programs" class="py-24 px-6 md:px-24 ">
-        <div class="max-w-7xl mx-auto">
-            <div class="section-header reveal">
-                <h2>Learning & Career</h2>
-                <div class="line"></div>
-            </div>
-            <div class="grid lg:grid-cols-3 gap-8">
-                <div class="glass p-10 rounded-[2.5rem] reveal">
-                    <h3 class="text-2xl font-black mb-4">Skill Courses</h3>
-                    <ul class="space-y-3 text-sm opacity-70">
-                        <li>• Full Stack Laravel Mastery</li>
-                        <li>• Professional Graphic Design</li>
-                        <li>• WordPress Customization</li>
-                    </ul>
-                    <button class="mt-8 text-primary font-bold text-xs uppercase tracking-tighter">View Courses
-                        →</button>
-                </div>
-                <div class="glass p-10 rounded-[2.5rem] border-t-4 border-primary reveal">
-                    <h3 class="text-2xl font-black mb-4 text-primary">Internship</h3>
-                    <p class="text-sm opacity-70 mb-6">Get hands-on experience working on real agency projects under
-                        expert mentorship.</p>
-                    <button class="px-6 py-3 bg-primary text-white rounded-lg text-[10px] font-bold uppercase">Apply
-                        Now</button>
-                </div>
-                <div class="glass p-10 rounded-[2.5rem] reveal">
-                    <h3 class="text-2xl font-black mb-4">Ambassador</h3>
-                    <p class="text-sm opacity-70 mb-6">Represent Alpha Coder in your campus and earn exclusive rewards and
-                        certificates.</p>
-                    <button class="mt-4 text-primary font-bold text-xs uppercase tracking-tighter">Learn More →</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="py-24 py-3 px-6 md:px-24">
-        <div class="max-w-7xl mx-auto">
-            <div class="section-header reveal">
-                <h2>Key Projects</h2>
-                <div class="line"></div>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass rounded-[2rem] overflow-hidden group reveal">
-                    <div
-                        class="h-48 bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center font-black text-primary p-6 text-center italic">
-                        STUDENT OF THE YEAR</div>
-                    <div class="p-8">
-                        <h4 class="text-xl font-bold">Olympiad System</h4>
-                        <p class="text-xs opacity-60 my-4 uppercase">Laravel, Ajax, Bootstrap</p>
-                        <a href="https://studentoftheyear.online"
-                            class="text-primary font-black text-xs uppercase tracking-widest border-b border-primary/20 pb-1 hover:border-primary transition-all">Live
-                            Link ↗</a>
-                    </div>
-                </div>
-                <div class="glass rounded-[2rem] overflow-hidden group border-t-2 border-primary reveal">
-                    <div
-                        class="h-48 bg-gradient-to-br from-blue-600/20 to-primary/20 flex items-center justify-center font-black text-blue-400 p-6 text-center italic uppercase">
-                        Avro E-Commerce</div>
-                    <div class="p-8">
-                        <h4 class="text-xl font-bold">Dynamic E-com</h4>
-                        <p class="text-xs opacity-60 my-4 uppercase">Product & Cart Management</p>
-                        <a href="http://avro.studentsoftheyear.com"
-                            class="text-primary font-black text-xs uppercase tracking-widest border-b border-primary/20 pb-1 hover:border-primary transition-all">Live
-                            Link ↗</a>
-                    </div>
-                </div>
-                <div class="glass rounded-[2rem] overflow-hidden group reveal">
-                    <div
-                        class="h-48 bg-gradient-to-br from-emerald-600/20 to-primary/20 flex items-center justify-center font-black text-emerald-400 p-6 text-center italic">
-                        Alpha Coder</div>
-                    <div class="p-8">
-                        <h4 class="text-xl font-bold">Agency Site</h4>
-                        <p class="text-xs opacity-60 my-4 uppercase">Intern Management Portal</p>
-                        <a href="http://requinbd.com"
-                            class="text-primary font-black text-xs uppercase tracking-widest border-b border-primary/20 pb-1 hover:border-primary transition-all">Live
-                            Link ↗</a>
-                    </div>
-                </div>
-            </div>
-
-            <h4 class="text-xs font-black uppercase text-primary mt-16 mb-8 reveal">
-                WordPress & Client Works
-                <span class="text-info text-[10px] font-normal">(Live Link)</span>
-            </h4>
-            <div class="flex flex-wrap gap-4 reveal">
-                <a href="https://uc-chembd.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">UC-Chem BD</a>
-                <a href="https://fernygrovevet.com.au"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">Fernygrove Vet</a>
-                <a href="https://secondpurchase.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">Second Purchase</a>
-                <a href="https://www.averontradesinternational.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">Averon Trades
-                    International</a>
-                <a href="https://bdsmartunion.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">BD Smart Union</a>
-                <a href="https://rehabphysiocare.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">Rehab Physio Care</a>
-                <a href="https://psdibd.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">PSDI BD</a>
-                <a href="https://dynamic.edu.bd"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">Dynamic EDU</a>
-                <a href="https://kmmusicstudio.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">KM Music Studio</a>
-                <a href="https://saifshoeb.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">Saif Shoeb</a>
-                <a href="https://cincinnaticarpetrepair.com"
-                    class="glass px-4 py-2 rounded-xl text-[10px] hover:text-primary transition">Cincinnati Carpet
-                    Repair</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="success" class="py-24 px-6 md:px-24">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-            <div class="reveal">
-                <h2 class="text-4xl font-black mb-6 uppercase">Student <span class="text-primary">Success</span> Stories
-                </h2>
-                <p class="opacity-60 mb-8">Hundreds of our students are now working in top local and international
-                    agencies. We don't just teach; we build careers.</p>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="glass p-6 rounded-2xl">
-                        <h4 class="text-3xl font-black text-primary">500+</h4>
-                        <p class="text-[10px] uppercase font-bold opacity-50">Students Placed</p>
-                    </div>
-                    <div class="glass p-6 rounded-2xl">
-                        <h4 class="text-3xl font-black text-primary">50+</h4>
-                        <p class="text-[10px] uppercase font-bold opacity-50">Active Interns</p>
-                    </div>
-                </div>
-            </div>
-            <div class="glass p-4 rounded-[2rem] reveal">
-                <div
-                    class="aspect-video bg-white/5 rounded-2xl flex items-center justify-center text-primary italic font-black">
-                    [SUCCESS SHOWCASE VIDEO/IMAGE]
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="testimonials" class="py-24 py-3 px-6 md:px-24 overflow-hidden">
-        <div class="max-w-7xl mx-auto">
-            <div class="section-header reveal">
-                <h2>Client Testimonials</h2>
-                <div class="line"></div>
-            </div>
-
-            <div class="swiper testimonial-swiper reveal">
-                <div class="swiper-wrapper py-10">
-
-                    <div class="swiper-slide">
-                        <div class="glass p-8 rounded-[2rem] relative h-full">
-                            <span
-                                class="text-5xl text-primary opacity-20 absolute top-6 right-8 italic font-serif">"</span>
-                            <p class="text-sm italic opacity-80 leading-relaxed mb-6">"Sultanul is a highly skilled
-                                developer. He delivered my e-commerce project on time with an amazing admin panel."</p>
-                            <div class="flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                                    JD</div>
-                                <div>
-                                    <h5 class="text-xs font-black uppercase">John Doe</h5>
-                                    <p class="text-[10px] opacity-50">CEO, Tech Solutions</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide">
-                        <div class="glass p-8 rounded-[2rem] relative h-full">
-                            <span
-                                class="text-5xl text-primary opacity-20 absolute top-6 right-8 italic font-serif">"</span>
-                            <p class="text-sm italic opacity-80 leading-relaxed mb-6">"Excellent graphic design skills.
-                                He created our brand identity perfectly. Highly recommended for any creative work."</p>
-                            <div class="flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                                    SA</div>
-                                <div>
-                                    <h5 class="text-xs font-black uppercase">Sarah Ahmed</h5>
-                                    <p class="text-[10px] opacity-50">Marketing Manager</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide">
-                        <div class="glass p-8 rounded-[2rem] relative h-full">
-                            <span
-                                class="text-5xl text-primary opacity-20 absolute top-6 right-8 italic font-serif">"</span>
-                            <p class="text-sm italic opacity-80 leading-relaxed mb-6">"His Laravel expertise is
-                                outstanding. The automation systems he built for our office saved us hundreds of hours."
-                            </p>
-                            <div class="flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                                    MK</div>
-                                <div>
-                                    <h5 class="text-xs font-black uppercase">Michael Knight</h5>
-                                    <p class="text-[10px] opacity-50">CTO, SoftHost IT</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="swiper-slide">
-                        <div class="glass p-8 rounded-[2rem] relative h-full">
-                            <span
-                                class="text-5xl text-primary opacity-20 absolute top-6 right-8 italic font-serif">"</span>
-                            <p class="text-sm italic opacity-80 leading-relaxed mb-6">"One of the best WordPress
-                                designers I have worked with. Responsive, clean, and modern aesthetics."</p>
-                            <div class="flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                                    RB</div>
-                                <div>
-                                    <h5 class="text-xs font-black uppercase">Robert Bruce</h5>
-                                    <p class="text-[10px] opacity-50">Freelance Client</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="glass p-8 rounded-[2rem] relative h-full">
-                            <span
-                                class="text-5xl text-primary opacity-20 absolute top-6 right-8 italic font-serif">"</span>
-                            <p class="text-sm italic opacity-80 leading-relaxed mb-6">"Arifine developed my WordPress
-                                website perfectly and graphic design also. Delivered on time and exceeded expectations.
-                                Proud to have 5+ satisfied WordPress projects and 30+ graphic Design!"</p>
-                            <div class="flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">
-                                    SM</div>
-                                <div>
-                                    <h5 class="text-xs font-black uppercase">SM Mehedi Hassan</h5>
-                                    <p class="text-[10px] opacity-50">Freelance Client</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="swiper-pagination !-bottom-2"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="faq" class="py-24 px-6 md:px-24">
-        <div class="max-w-4xl mx-auto">
-            <div class="section-header text-center block reveal">
-                <h2 class="inline-block">Common Questions</h2>
-                <div class="line mx-auto"></div>
-            </div>
-            <div class="space-y-4 reveal">
-                <details class="glass p-6 rounded-2xl cursor-pointer group">
-                    <summary class="font-bold list-none flex justify-between">How to join the Internship Program? <span
-                            class="text-primary">+</span></summary>
-                    <p class="text-xs opacity-60 mt-4 leading-relaxed">You can apply through our dedicated career portal
-                        at Alpha Coder. We review applications monthly based on skill assessments.</p>
-                </details>
-                <details class="glass p-6 rounded-2xl cursor-pointer group">
-                    <summary class="font-bold list-none flex justify-between">Are the courses online or offline? <span
-                            class="text-primary">+</span></summary>
-                    <p class="text-xs opacity-60 mt-4 leading-relaxed">We offer both flexible online modules and
-                        intensive offline workshops at our Jhenaidah center.</p>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 px-6">
-        <div class="max-w-5xl mx-auto glass p-12 rounded-[3rem] text-center border-2 border-primary/20 reveal">
-            <h2 class="text-4xl font-black mb-6 uppercase">Ready to Start Your Journey?</h2>
-            <p class="opacity-60 mb-10 max-w-xl mx-auto">Join the Alpha Coder family today and unlock your potential in
-                the tech world.</p>
-            <a href="https://wa.me/8801766359998"
-                class="px-10 py-5 bg-primary text-white font-black rounded-2xl shadow-2xl hover:scale-105 transition-all inline-block uppercase tracking-widest text-sm">Join
-                Now</a>
-        </div>
-    </section>
-
-    <footer id="contact" class="relative pt-24 pb-12 px-6 md:px-24 overflow-hidden">
-        <div
-            class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent">
-        </div>
-        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/10 blur-[120px] rounded-full"></div>
-        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full"></div>
-
-        <div class="max-w-7xl mx-auto relative z-10">
-            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-12 mb-16">
-
-                <div class="lg:col-span-2 reveal">
-                    <a href="#" class="text-3xl font-black tracking-tighter text-primary uppercase mb-6 block">
-                        Arifine<span class="text-slate-400 dark:text-white">.dev</span>
-                    </a>
-                    <p class="text-sm opacity-60 leading-relaxed max-w-md mb-8 font-medium">
-                        As a skilled Laravel Developer and Graphic Designer, I believe that coding and design complement
-                        each other. I am always ready to bring your ideas to life.
-                    </p>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-2 space-y-6">
+        
+        <div class="glass p-1 rounded-[3.5rem] border-white/5 bg-gradient-to-br from-white/5 to-transparent overflow-hidden">
+            <div class="glass rounded-[3.3rem] p-8 md:p-10">
+                <div class="flex justify-between items-center mb-10">
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] italic text-white">Revenue <span class="text-primary">Velocity</span></h4>
                     <div class="flex gap-4">
-                        <a href="https://github.com/sultanularifine"
-                            class="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 magnetic-btn border border-white/5">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                            </svg>
-                        </a>
-                        <a href="https://linkedin.com/in/sultanularifine"
-                            class="w-10 h-10 glass rounded-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300 magnetic-btn border border-white/5">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                            </svg>
-                        </a>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-primary"></span><span class="text-[8px] font-black text-white/40 uppercase">Earnings</span></div>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-white/20"></span><span class="text-[8px] font-black text-white/40 uppercase">Target</span></div>
                     </div>
                 </div>
-
-                <div class="reveal">
-                    <h4 class="text-xs font-black uppercase text-primary mb-6 tracking-widest">Navigation</h4>
-                    <ul class="space-y-4 text-[11px] font-bold uppercase tracking-widest opacity-60">
-                        <li><a href="#home"
-                                class="hover:text-primary hover:translate-x-2 transition-all inline-block">Home</a></li>
-                        <li><a href="#about"
-                                class="hover:text-primary hover:translate-x-2 transition-all inline-block">About Me</a>
-                        </li>
-                        <li><a href="#projects"
-                                class="hover:text-primary hover:translate-x-2 transition-all inline-block">Portfolio</a>
-                        </li>
-                        <li><a href="#pricing"
-                                class="hover:text-primary hover:translate-x-2 transition-all inline-block">Pricing
-                                Plans</a></li>
-                        <li><a href="certificate-verify.html"
-                                class="hover:text-primary hover:translate-x-2 transition-all inline-block">Certificate
-                                Verify</a></li>
-                    </ul>
-                    </ul>
+                
+                <div class="h-64 w-full flex items-end gap-2 px-4 relative">
+                    <div class="absolute inset-0 flex flex-col justify-between opacity-5">
+                        <div class="border-t border-white w-full"></div>
+                        <div class="border-t border-white w-full"></div>
+                        <div class="border-t border-white w-full"></div>
+                        <div class="border-t border-white w-full"></div>
+                    </div>
+                    <div class="flex-1 bg-white/5 rounded-t-xl h-[40%] hover:bg-primary/40 transition-all cursor-pointer"></div>
+                    <div class="flex-1 bg-white/5 rounded-t-xl h-[60%] hover:bg-primary/40 transition-all cursor-pointer"></div>
+                    <div class="flex-1 bg-primary rounded-t-xl h-[85%] relative group">
+                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 glass px-3 py-1 rounded-lg text-[8px] font-black text-white opacity-0 group-hover:opacity-100 transition-all">৳ 120k</div>
+                    </div>
+                    <div class="flex-1 bg-white/5 rounded-t-xl h-[55%] hover:bg-primary/40 transition-all cursor-pointer"></div>
+                    <div class="flex-1 bg-white/5 rounded-t-xl h-[75%] hover:bg-primary/40 transition-all cursor-pointer"></div>
+                    <div class="flex-1 bg-white/5 rounded-t-xl h-[95%] hover:bg-primary/40 transition-all cursor-pointer"></div>
                 </div>
-
-                <div class="reveal">
-                    <h4 class="text-xs font-black uppercase text-primary mb-6 tracking-widest">Contact Info</h4>
-                    <ul class="space-y-4 text-[11px] font-bold opacity-60">
-                        <li class="flex items-center gap-3">
-                            <span class="text-primary">📍</span> Mithapukur, Jhenaidah
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="text-primary">📧</span> sultanularifine@gmail.com
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="text-primary">📞</span> +880 1766 359 998
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="border-t border-white/5 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 ">
-                <p class="text-[10px] font-mono uppercase tracking-[0.3em] opacity-40">
-                    &copy; 2026 Sultanul Arifine. All Rights Reserved.
-                </p>
-                <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    <span class="text-[9px] font-black uppercase tracking-widest opacity-60">Available for Any
-                        Projects</span>
+                <div class="flex justify-between mt-6 px-4 text-[8px] font-black text-white/20 uppercase italic tracking-widest">
+                    <span>Jan</span><span>Feb</span><span>Mar (Current)</span><span>Apr</span><span>May</span><span>Jun</span>
                 </div>
             </div>
         </div>
-    </footer>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass p-8 rounded-[3rem] border-white/5 bg-white/[0.02]">
+                <p class="text-[8px] font-black uppercase tracking-[0.2em] text-white/40 mb-4 italic">User Growth Rate</p>
+                <div class="flex items-end gap-4">
+                    <h2 class="text-4xl font-black italic tracking-tighter text-white">+248</h2>
+                    <span class="text-[9px] font-black text-green-500 mb-2 uppercase italic">↑ 18%</span>
+                </div>
+                <p class="text-[7px] font-bold text-white/20 uppercase mt-2 tracking-widest">New students this cycle</p>
+            </div>
+            
+            <div class="glass p-8 rounded-[3rem] border-primary/20 bg-primary/5">
+                <p class="text-[8px] font-black uppercase tracking-[0.2em] text-primary mb-4 italic">Referral Conversion</p>
+                <div class="flex items-end gap-4">
+                    <h2 class="text-4xl font-black italic tracking-tighter text-white">32%</h2>
+                    <span class="text-[9px] font-black text-white/40 mb-2 uppercase italic">Elite Tier</span>
+                </div>
+                <p class="text-[7px] font-bold text-white/20 uppercase mt-2 tracking-widest">Conversion from Requin Ambassadors</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <div class="glass p-8 rounded-[3rem] border-white/5 bg-white/[0.02]">
+            <h4 class="text-xs font-black uppercase tracking-[0.2em] italic text-white mb-8">Course <span class="text-primary">Popularity</span></h4>
+            
+            <div class="space-y-6">
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[9px] font-black uppercase italic">
+                        <span class="text-white">Mastering Laravel</span>
+                        <span class="text-primary">68%</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-primary w-[68%]"></div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[9px] font-black uppercase italic">
+                        <span class="text-white">Responsible AI</span>
+                        <span class="text-blue-400">42%</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-500 w-[42%]"></div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[9px] font-black uppercase italic">
+                        <span class="text-white">Web UI/UX (Glass)</span>
+                        <span class="text-orange-500">25%</span>
+                    </div>
+                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full bg-orange-500 w-[25%]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-white/5">
+                <p class="text-[8px] font-bold text-white/20 uppercase italic leading-tight">
+                    Analytics are calculated based on enrollment velocity and student completion rates.
+                </p>
+            </div>
+        </div>
+
+        <div class="glass p-8 rounded-[3rem] border-white/5 bg-gradient-to-br from-white/5 to-transparent">
+            <p class="text-[8px] font-black uppercase tracking-[0.2em] text-white/30 mb-4 italic">Platform conversion</p>
+            <div class="flex justify-between items-center">
+                <div class="text-center">
+                    <p class="text-xl font-black text-white italic">4.8k</p>
+                    <p class="text-[7px] font-black text-white/20 uppercase italic">Visitors</p>
+                </div>
+                <div class="text-primary">→</div>
+                <div class="text-center">
+                    <p class="text-xl font-black text-white italic">248</p>
+                    <p class="text-[7px] font-black text-white/20 uppercase italic">Enrollments</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </main>
+
+    <button id="sidebar-toggle" onclick="toggleSidebar()"
+        class="fixed bottom-6 right-6 z-[70] lg:hidden w-14 h-14 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all border border-white/20">☰</button>
+
+    <script src="script.js"></script>
+
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#ff4d4d',
-                        darkBg: '#050505',
-                        lightBg: '#f8fafc',
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    }
-                }
+        document.addEventListener("DOMContentLoaded", function () {
+
+            function loadHTML(id, file) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File not found: " + file);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                    })
+                    .catch(error => console.error(error));
             }
-        }
-    </script>
-    <script>
-        // --- Custom Cursor ---
-        const dot = document.getElementById('cursor-dot');
-        const outline = document.getElementById('cursor-outline');
-        window.addEventListener('mousemove', (e) => {
-            gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0.1 });
-            gsap.to(outline, { x: e.clientX, y: e.clientY, duration: 0.3 });
-        });
 
-        // --- GSAP Scroll Reveal (Veshe othar effect) ---
-        gsap.registerPlugin(ScrollTrigger);
-        document.querySelectorAll('.reveal').forEach((el) => {
-            gsap.to(el, {
-                opacity: 1, y: 0, duration: 1, ease: "power3.out",
-                scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" }
-            });
-        });
+            loadHTML("header", "header.html");
+            loadHTML("sidebar", "sidebar.html");
 
-        // --- Magnetic Buttons ---
-        document.querySelectorAll('.magnetic-btn').forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3 });
-            });
-            btn.addEventListener('mouseleave', () => {
-                gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
-            });
-        });
-
-        new Typed('#typed-text', {
-            strings: [
-                'Scale Your Brand with <span class="bg-gradient-to-r from-red-500 via-pink-500 to-orange-400 bg-clip-text text-transparent">Arifine Dev</span>',
-            ],
-            typeSpeed: 60,
-            backSpeed: 0,
-            showCursor: true,
-            loop: false,
-            contentType: 'html'
-        });
-
-        // --- Three.js Particles ---
-        let scene, camera, renderer, particles;
-        function init3D() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('canvas-container').appendChild(renderer.domElement);
-            const pGeometry = new THREE.BufferGeometry();
-            const pVertices = [];
-            for (let i = 0; i < 1500; i++) {
-                pVertices.push(THREE.MathUtils.randFloatSpread(50), THREE.MathUtils.randFloatSpread(50), THREE.MathUtils.randFloatSpread(50));
-            }
-            pGeometry.setAttribute('position', new THREE.Float32BufferAttribute(pVertices, 3));
-            particles = new THREE.Points(pGeometry, new THREE.PointsMaterial({ color: 0xff4d4d, size: 0.1, transparent: true, opacity: 0.4 }));
-            scene.add(particles);
-            camera.position.z = 15;
-        }
-        function animate() {
-            requestAnimationFrame(animate);
-            particles.rotation.y += 0.001;
-            renderer.render(scene, camera);
-        }
-        init3D(); animate();
-
-        document.getElementById('theme-toggle').addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new Swiper(".testimonial-swiper", {
-                slidesPerView: 1,
-                spaceBetween: 30,
-                loop: true,
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                },
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                breakpoints: {
-                    768: {
-                        slidesPerView: 2,
-                    },
-                    1024: {
-                        slidesPerView: 3,
-                    },
-                },
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            new Swiper(".certificate-swiper", {
-                slidesPerView: 1,
-                spaceBetween: 20,
-                loop: true,
-                autoplay: {
-                    delay: 4000, // সার্টিফিকেটের জন্য সময় একটু বেশি দেওয়া হয়েছে
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true, // মাউস রাখলে স্লাইডার থেমে যাবে
-                },
-                navigation: {
-                    nextEl: ".cert-next",
-                    prevEl: ".cert-prev",
-                },
-                breakpoints: {
-                    640: {
-                        slidesPerView: 2,
-                    },
-                    1024: {
-                        slidesPerView: 4,
-                    },
-                },
-            });
-        });
-
-    </script>
-    <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        // Toggle Function
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('flex');
-            menuBtn.innerText = mobileMenu.classList.contains('hidden') ? '☰' : '✕';
-        });
-
-        // Close menu when a link is clicked
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('flex');
-                menuBtn.innerText = '☰';
-            });
-        });
-
-    </script>
+    
 </body>
 
 </html>

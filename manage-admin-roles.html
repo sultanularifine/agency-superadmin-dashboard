@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultanul Arifinee | Web Developer & CEO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            cursor: none;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
+
+        .text-primary {
+            color: #ff4d4d !important;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        /* Cursor */
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #ff4d4d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-outline {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 77, 77, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Social Dock */
+        .social-dock {
+            position: fixed;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .dock-item {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+
+        .dock-item:hover {
+            transform: translateX(-10px) rotateY(-20deg) scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .dock-name {
+            position: absolute;
+            right: 65px;
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dock-item:hover .dock-name {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dock-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Custom Sidebar Scrollbar */
+        #dashboard-sidebar div::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        #dashboard-sidebar div::-webkit-scrollbar-thumb {
+            background: #ff4d4d33;
+            border-radius: 10px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+    </style>
+</head>
+
+<body class="bg-lightBg dark:bg-darkBg text-slate-900 dark:text-slate-100">
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <div id="canvas-container"></div>
+    <div id="header"></div>
+
+
+    <main class="pt-32 pb-24 px-4 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+
+        <div id="sidebar"></div>
+
+        <div class="flex-1 space-y-8">
+<div class="mt-16 mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Role <span class="text-primary">Architect</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Define Operational Boundaries, Access Levels & Permission Clusters</p>
+    </div>
+    <div class="flex gap-3">
+        <button class="bg-primary text-white text-[9px] font-black uppercase tracking-widest px-8 py-4 rounded-2xl shadow-lg hover:scale-105 transition-all">+ Create New Role</button>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-1 space-y-4">
+        <p class="text-[8px] font-black uppercase tracking-[0.2em] text-white/20 mb-4 ml-2 italic">Active Roles</p>
+        
+        <div class="glass p-5 rounded-[2.5rem] border-primary/40 bg-primary/5 cursor-pointer group">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-[11px] font-black text-white uppercase italic">Super Admin</p>
+                    <p class="text-[7px] font-bold text-primary uppercase mt-1 italic tracking-widest">Full System Access</p>
+                </div>
+                <span class="text-xs opacity-40">🔒</span>
+            </div>
+        </div>
+
+        <div class="glass p-5 rounded-[2.5rem] border-white/5 bg-white/[0.02] cursor-pointer hover:border-white/20 transition-all border-l-4 border-l-blue-500">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-[11px] font-black text-white uppercase italic">Course Mentor</p>
+                    <p class="text-[7px] font-bold text-white/20 uppercase mt-1 italic tracking-widest">Manage Batch & Content</p>
+                </div>
+                <span class="text-[8px] font-black text-white/10 uppercase">v1.2</span>
+            </div>
+        </div>
+
+        <div class="glass p-5 rounded-[2.5rem] border-white/5 bg-white/[0.02] cursor-pointer hover:border-white/20 transition-all">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-[11px] font-black text-white uppercase italic">Support Intern</p>
+                    <p class="text-[7px] font-bold text-white/20 uppercase mt-1 italic tracking-widest">Student Query & Help</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lg:col-span-2 space-y-6">
+        <div class="glass p-1 rounded-[3.5rem] border-white/5 bg-gradient-to-br from-white/5 to-transparent overflow-hidden">
+            <div class="glass rounded-[3.3rem] p-10 bg-black/20">
+                <div class="flex justify-between items-center mb-10">
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] italic text-white">Permissions for: <span class="text-primary">Course Mentor</span></h4>
+                    <button class="text-[9px] font-black text-white/40 uppercase hover:text-white transition-all italic underline underline-offset-4">Reset to Default</button>
+                </div>
+
+                <div class="space-y-12">
+                    <div class="space-y-6">
+                        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 italic border-b border-white/5 pb-2">Academic Modules</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <label class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 cursor-pointer group">
+                                <span class="text-[10px] font-black text-white/60 uppercase italic">Upload Lessons</span>
+                                <div class="w-8 h-4 bg-primary/40 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+                            </label>
+                            <label class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 cursor-pointer group">
+                                <span class="text-[10px] font-black text-white/60 uppercase italic">Create Certificates</span>
+                                <div class="w-8 h-4 bg-primary/40 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+                            </label>
+                            <label class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 cursor-pointer group">
+                                <span class="text-[10px] font-black text-white/60 uppercase italic">Delete Courses</span>
+                                <div class="w-8 h-4 bg-white/10 rounded-full relative"><div class="absolute left-0.5 top-0.5 w-3 h-3 bg-white/20 rounded-full"></div></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 italic border-b border-white/5 pb-2">Student Relations</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <label class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 cursor-pointer group">
+                                <span class="text-[10px] font-black text-white/60 uppercase italic">View Enrollments</span>
+                                <div class="w-8 h-4 bg-primary/40 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+                            </label>
+                            <label class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 cursor-pointer group">
+                                <span class="text-[10px] font-black text-white/60 uppercase italic">Manual Admission</span>
+                                <div class="w-8 h-4 bg-white/10 rounded-full relative"><div class="absolute left-0.5 top-0.5 w-3 h-3 bg-white/20 rounded-full"></div></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 opacity-40">
+                        <p class="text-[9px] font-black uppercase tracking-[0.2em] text-white/10 italic border-b border-white/5 pb-2">Financial Nodes (Super Admin Only)</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="flex items-center justify-between p-4 rounded-2xl bg-black/20 border border-white/5">
+                                <span class="text-[10px] font-black text-white/30 uppercase italic">Refund Processing</span>
+                                <span class="text-[8px] font-bold text-red-500/40 uppercase">Locked</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 rounded-[2.5rem] bg-orange-500/5 border border-orange-500/10 italic">
+            <p class="text-[7px] font-bold text-orange-500/40 uppercase leading-relaxed">
+                * Caution: Changing permissions will affect all users currently assigned to this role. Active sessions may need to be refreshed.
+            </p>
+        </div>
+    </div>
+</div>
+            
+        </div>
+    </main>
+
+    <button id="sidebar-toggle" onclick="toggleSidebar()"
+        class="fixed bottom-6 right-6 z-[70] lg:hidden w-14 h-14 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all border border-white/20">☰</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            function loadHTML(id, file) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File not found: " + file);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            loadHTML("header", "header.html");
+            loadHTML("sidebar", "sidebar.html");
+
+        });
+    </script>
+</body>
+
+</html>

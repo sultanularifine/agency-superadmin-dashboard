@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultanul Arifinee | Web Developer & CEO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            cursor: none;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
+
+        .text-primary {
+            color: #ff4d4d !important;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        /* Cursor */
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #ff4d4d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-outline {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 77, 77, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Social Dock */
+        .social-dock {
+            position: fixed;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .dock-item {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+
+        .dock-item:hover {
+            transform: translateX(-10px) rotateY(-20deg) scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .dock-name {
+            position: absolute;
+            right: 65px;
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dock-item:hover .dock-name {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dock-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Custom Sidebar Scrollbar */
+        #dashboard-sidebar div::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        #dashboard-sidebar div::-webkit-scrollbar-thumb {
+            background: #ff4d4d33;
+            border-radius: 10px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+    </style>
+</head>
+
+<body class="bg-lightBg dark:bg-darkBg text-slate-900 dark:text-slate-100">
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <div id="canvas-container"></div>
+    <div id="header"></div>
+
+
+    <main class="pt-32 pb-24 px-4 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+
+        <div id="sidebar"></div>
+
+        <div class="flex-1 space-y-8">
+<div class="mt-16 mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Certification <span class="text-primary">Forge</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Design, Validate, and Issue Premium Student Credentials</p>
+    </div>
+    <div class="flex gap-3">
+        <button class="glass border-white/5 bg-white/5 px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest text-white italic hover:border-primary transition-all">Preview All</button>
+        <button class="bg-primary text-white text-[9px] font-black uppercase tracking-widest px-8 py-3 rounded-xl shadow-lg hover:scale-105 transition-all">+ New Template</button>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-1 space-y-4">
+        <p class="text-[8px] font-black uppercase tracking-[0.2em] text-white/20 mb-4 ml-2 italic">Available Layouts</p>
+        
+        <div class="glass p-4 rounded-[2.5rem] border-primary/20 bg-primary/5 cursor-pointer group">
+            <div class="h-32 rounded-[2rem] bg-black/40 border border-white/5 overflow-hidden mb-4 relative">
+                <div class="absolute inset-0 flex items-center justify-center text-2xl opacity-20">🎓</div>
+            </div>
+            <div class="flex justify-between items-center px-2">
+                <div>
+                    <p class="text-[10px] font-black text-white uppercase italic">Elite Mastery v1</p>
+                    <p class="text-[7px] font-bold text-primary uppercase mt-1">Default for Laravel</p>
+                </div>
+                <div class="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_#ff4d4d]"></div>
+            </div>
+        </div>
+
+        <div class="glass p-4 rounded-[2.5rem] border-white/5 bg-white/[0.02] cursor-pointer hover:border-white/20 transition-all opacity-60">
+            <div class="h-32 rounded-[2rem] bg-black/20 border border-white/5 overflow-hidden mb-4 relative">
+                 <div class="absolute inset-0 flex items-center justify-center text-2xl opacity-10">🤖</div>
+            </div>
+            <div class="px-2">
+                <p class="text-[10px] font-black text-white/60 uppercase italic">Minimal AI Scholar</p>
+                <p class="text-[7px] font-bold text-white/20 uppercase mt-1">Responsible AI Course</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lg:col-span-2 space-y-6">
+        <div class="glass p-1 rounded-[3.5rem] border-white/5 bg-gradient-to-br from-white/5 to-transparent overflow-hidden">
+            <div class="glass rounded-[3.3rem] p-12 bg-black relative overflow-hidden aspect-[1.414/1]">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] -mr-32 -mt-32"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-orange-500/5 blur-[80px] -ml-24 -mb-24"></div>
+                
+                <div class="relative z-10 border-[1px] border-white/10 h-full w-full p-10 flex flex-col items-center justify-center text-center">
+                    <div class="mb-6">
+                        <h4 class="text-xl font-black uppercase tracking-tighter italic text-white">REQUIN <span class="text-primary">BD</span></h4>
+                        <div class="h-px w-12 bg-primary mx-auto mt-2"></div>
+                    </div>
+
+                    <p class="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 italic">Certificate of Mastery</p>
+                    
+                    <h2 class="text-4xl font-black italic tracking-tighter text-white mb-2 uppercase">Student Name</h2>
+                    <p class="text-[9px] font-bold text-white/60 uppercase tracking-widest mb-8">Has successfully architected the core infrastructure of</p>
+                    
+                    <h3 class="text-2xl font-black text-primary italic uppercase tracking-tight mb-10">Mastering Laravel Elite</h3>
+
+                    <div class="w-full flex justify-between items-end mt-4">
+                        <div class="text-left">
+                            <div class="h-px w-32 bg-white/20 mb-3"></div>
+                            <p class="text-[8px] font-black text-white uppercase italic">Sultanul Arifin</p>
+                            <p class="text-[7px] font-bold text-white/20 uppercase">Founder & CEO, Requin BD</p>
+                        </div>
+                        
+                        <div class="w-16 h-16 glass border-white/10 p-2 rounded-xl flex flex-col items-center justify-center gap-1">
+                            <div class="w-8 h-8 bg-white opacity-20 rounded-sm"></div>
+                            <p class="text-[5px] font-black text-white/40 uppercase italic">Verify ID</p>
+                        </div>
+
+                        <div class="text-right">
+                            <div class="h-px w-32 bg-white/20 mb-3"></div>
+                            <p class="text-[8px] font-black text-white uppercase italic">March 2026</p>
+                            <p class="text-[7px] font-bold text-white/20 uppercase">Date of Issue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="absolute top-6 left-6 w-12 h-12 border-t-2 border-l-2 border-primary/40 rounded-tl-xl"></div>
+                <div class="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2 border-primary/40 rounded-br-xl"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass p-4 rounded-2xl border-white/5 text-center cursor-pointer hover:bg-white/5 transition-all">
+                <p class="text-[8px] font-black text-white/40 uppercase italic">Font Style</p>
+                <p class="text-[10px] font-black text-white uppercase mt-1">Inter Tight</p>
+            </div>
+            <div class="glass p-4 rounded-2xl border-white/5 text-center cursor-pointer hover:bg-white/5 transition-all">
+                <p class="text-[8px] font-black text-white/40 uppercase italic">Accent Color</p>
+                <div class="w-4 h-4 bg-primary mx-auto mt-2 rounded-full shadow-[0_0_10px_rgba(255,77,77,0.5)]"></div>
+            </div>
+            <div class="glass p-4 rounded-2xl border-white/5 text-center cursor-pointer hover:bg-white/5 transition-all">
+                <p class="text-[8px] font-black text-white/40 uppercase italic">Signature</p>
+                <p class="text-[10px] font-black text-white uppercase mt-1">Upload PNG</p>
+            </div>
+            <div class="glass p-4 rounded-2xl border-white/5 text-center cursor-pointer hover:bg-white/5 transition-all">
+                <p class="text-[8px] font-black text-white/40 uppercase italic">Paper Size</p>
+                <p class="text-[10px] font-black text-white uppercase mt-1">A4 Landsc.</p>
+            </div>
+        </div>
+    </div>
+</div>
+            
+        </div>
+    </main>
+
+    <button id="sidebar-toggle" onclick="toggleSidebar()"
+        class="fixed bottom-6 right-6 z-[70] lg:hidden w-14 h-14 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all border border-white/20">☰</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            function loadHTML(id, file) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File not found: " + file);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            loadHTML("header", "header.html");
+            loadHTML("sidebar", "sidebar.html");
+
+        });
+    </script>
+</body>
+
+</html>

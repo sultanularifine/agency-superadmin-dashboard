@@ -1,0 +1,118 @@
+<div id="sidebar-overlay" onclick="toggleSidebar()"
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[64] hidden lg:hidden"></div>
+<aside id="dashboard-sidebar"
+    class="fixed inset-y-0 left-0 z-[65] w-72 transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-500 ease-in-out lg:block h-screen lg:h-auto">
+    <div class="glass h-full lg:h-auto m-4 lg:m-0 p-6 rounded-[2rem] border-white/5 overflow-y-auto">
+        <div class="flex items-center justify-between mb-10 px-2">
+            <div class="flex items-center gap-4">
+                <div
+                    class="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30">
+                    <span class="text-primary text-xl font-black">SA</span>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black uppercase tracking-tighter">Student Panel</h4>
+                    <p class="text-[10px] opacity-40 uppercase tracking-widest font-bold text-primary">Alpha Coder
+                    </p>
+                </div>
+            </div>
+            <button onclick="toggleSidebar()" class="lg:hidden text-2xl opacity-50">&times;</button>
+        </div>
+
+     <nav class="space-y-1.5 font-bold text-[11px] uppercase tracking-widest">
+    <!-- Main Dashboard -->
+    <a href="index.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-primary text-white shadow-lg shadow-primary/20 transition-all">
+        <span>📊</span> Dashboard
+    </a>
+
+    <!-- Core Admin -->
+    <a href="admin-management.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>🛠️</span> Admin Management
+    </a>
+    <a href="user-permissions.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>🔑</span> User Permissions
+    </a>
+    <a href="system-logs.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>📜</span> System Logs
+    </a>
+    <a href="payments.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>💰</span> Payments
+    </a>
+    <a href="commission-settings.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>💸</span> Commission Settings
+    </a>
+    <a href="certificate-templates.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>📜</span> Certificate Templates
+    </a>
+    <a href="api-integrations.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>🔗</span> API Integrations
+    </a>
+    <a href="google-meet-integration.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>🎥</span> Google Meet Integration
+    </a>
+    <a href="email-automation.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>✉️</span> Email Automation
+    </a>
+    <a href="backup-system.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>💾</span> Backup System
+    </a>
+    <a href="security.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>🔒</span> Security
+    </a>
+    <a href="site-settings.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+        <span>⚙️</span> Site Settings
+    </a>
+
+    <!-- Features Submenu -->
+    <div class="my-6 border-t border-white/5 pt-6">
+        <span class="text-[10px] font-bold uppercase tracking-widest opacity-50 px-4">Features</span>
+        <a href="create-admin.html"
+            class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100 mt-2">
+            <span>➕</span> Create Admin
+        </a>
+        <a href="manage-admin-roles.html"
+            class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+            <span>🧑‍💼</span> Manage Admin Roles
+        </a>
+        <a href="payment-gateway-settings.html"
+            class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+            <span>💳</span> Payment Gateway Settings
+        </a>
+        <a href="commission-percent.html"
+            class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+            <span>📈</span> Commission %
+        </a>
+        <a href="system-activity-logs.html"
+            class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+            <span>📋</span> System Activity Logs
+        </a>
+        <a href="database-backup.html"
+            class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+            <span>💾</span> Database Backup
+        </a>
+        <a href="server-monitoring.html"
+            class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all opacity-60 hover:opacity-100">
+            <span>🖥️</span> Server Monitoring
+        </a>
+    </div>
+
+    <!-- Logout -->
+    <a href="logout.html"
+        class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-red-500/10 text-red-500 transition-all mt-4">
+        <span>🚪</span> Logout
+    </a>
+</nav>
+    </div>
+</aside>

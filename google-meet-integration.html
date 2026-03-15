@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultanul Arifinee | Web Developer & CEO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            cursor: none;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
+
+        .text-primary {
+            color: #ff4d4d !important;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        /* Cursor */
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #ff4d4d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-outline {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 77, 77, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Social Dock */
+        .social-dock {
+            position: fixed;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .dock-item {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+
+        .dock-item:hover {
+            transform: translateX(-10px) rotateY(-20deg) scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .dock-name {
+            position: absolute;
+            right: 65px;
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dock-item:hover .dock-name {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dock-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Custom Sidebar Scrollbar */
+        #dashboard-sidebar div::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        #dashboard-sidebar div::-webkit-scrollbar-thumb {
+            background: #ff4d4d33;
+            border-radius: 10px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+    </style>
+</head>
+
+<body class="bg-lightBg dark:bg-darkBg text-slate-900 dark:text-slate-100">
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <div id="canvas-container"></div>
+    <div id="header"></div>
+
+
+    <main class="pt-32 pb-24 px-4 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+
+        <div id="sidebar"></div>
+
+        <div class="flex-1 space-y-8">
+<div class="mt-16 mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Live <span class="text-primary">Classroom</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Google Meet API Sync, Automated Scheduling & Student Attendance</p>
+    </div>
+    <div class="flex gap-3">
+        <button class="bg-white text-black text-[9px] font-black uppercase tracking-widest px-8 py-4 rounded-2xl shadow-xl hover:scale-105 transition-all flex items-center gap-3">
+            <span class="text-lg">📅</span> Schedule Live Session
+        </button>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-2 space-y-6">
+        
+        <div class="glass p-6 rounded-[2.5rem] border-blue-500/20 bg-blue-500/5 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24"><path fill="#00832d" d="M0 11l2-5 5-2 3 2 2 5-2 5-5 2-3-2z"/><path fill="#0066da" d="M24 11l-2-5-5-2-3 2-2 5 2 5 5 2 3-2z"/><path fill="#e94235" d="M0 24l2-5 5-2 3 2 2 5-2 5-5 2-3-2z"/><path fill="#fabb05" d="M24 24l-2-5-5-2-3 2-2 5 2 5 5 2 3-2z"/><path fill="#000" fill-opacity=".05" d="M0 24l24-24V0H0z"/><path fill="#fff" d="M5 8h14v8H5z"/><path fill="#00832d" d="M5 8l4 4-4 4z"/><path fill="#0066da" d="M19 8l-4 4 4 4z"/><path fill="#fabb05" d="M12 8l-3 4 3 4z"/><path fill="#e94235" d="M12 8l3 4-3 4z"/></svg>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-white uppercase italic tracking-widest">Google Workspace API</p>
+                    <p class="text-[8px] font-bold text-blue-400 uppercase italic">Status: Fully Synchronized</p>
+                </div>
+            </div>
+            <span class="text-[8px] font-black text-white/20 uppercase italic">Linked: admin@requinbd.com</span>
+        </div>
+
+        <div class="glass p-1 rounded-[3.5rem] border-white/5 bg-gradient-to-br from-white/5 to-transparent overflow-hidden">
+            <div class="glass rounded-[3.3rem] p-8">
+                <h4 class="text-xs font-black uppercase tracking-[0.2em] italic text-white/40 mb-8">Active & <span class="text-white">Upcoming Classes</span></h4>
+                
+                <div class="space-y-4">
+                    <div class="p-6 rounded-[2rem] bg-white/5 border border-primary/20 relative group overflow-hidden">
+                        <div class="absolute right-0 top-0 h-full w-1 bg-primary"></div>
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 rounded-2xl bg-primary/10 flex flex-col items-center justify-center border border-primary/20">
+                                    <span class="text-[8px] font-black text-primary uppercase">Live</span>
+                                    <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-black text-white uppercase italic tracking-tight">Laravel Advanced Middleware</h5>
+                                    <p class="text-[8px] font-bold text-white/30 uppercase mt-1">Batch 08 • 42 Students Joined</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <button class="px-6 py-3 rounded-xl bg-primary text-white text-[9px] font-black uppercase tracking-widest hover:scale-105 transition-all">Join Room</button>
+                                <button class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-[9px] font-black text-white/40 uppercase hover:text-white transition-all">📋 Attendance</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 opacity-60">
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 rounded-2xl bg-white/5 flex flex-col items-center justify-center border border-white/5">
+                                    <span class="text-[8px] font-black text-white/40 uppercase">20:00</span>
+                                    <span class="text-[6px] font-bold text-white/20 uppercase">Tonight</span>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-black text-white uppercase italic tracking-tight">Responsible AI for Schools</h5>
+                                    <p class="text-[8px] font-bold text-white/30 uppercase mt-1">Class 9-10 Workshop • 120 Registered</p>
+                                </div>
+                            </div>
+                            <button class="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[9px] font-black text-white/40 uppercase italic">Manage Link</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        <div class="glass p-8 rounded-[3rem] border-white/5 bg-gradient-to-b from-white/5 to-transparent text-center">
+            <p class="text-[8px] font-black uppercase tracking-[0.2em] text-white/30 mb-6 italic">Recording Storage (Drive)</p>
+            <div class="w-20 h-20 mx-auto bg-blue-500/10 rounded-full flex items-center justify-center mb-6 relative">
+                <span class="text-3xl">☁️</span>
+                <div class="absolute -bottom-2 bg-blue-500 text-white text-[7px] font-black px-2 py-1 rounded-full italic">85% Full</div>
+            </div>
+            <button class="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[9px] font-black text-white uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+                Access Archive
+            </button>
+        </div>
+
+        <div class="glass p-8 rounded-[3rem] border-green-500/20 bg-green-500/5">
+            <h4 class="text-xs font-black uppercase tracking-[0.2em] italic text-white mb-6">Engagement <span class="text-green-500">Metric</span></h4>
+            <div class="space-y-4">
+                <div class="flex justify-between text-[9px] font-black uppercase italic text-white/60">
+                    <span>Avg. Attendance</span>
+                    <span class="text-green-500">92%</span>
+                </div>
+                <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-green-500 w-[92%]"></div>
+                </div>
+                <p class="text-[7px] font-bold text-white/20 uppercase italic mt-4 leading-tight">
+                    Data synced directly from Meet Participant Logs.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+            
+        </div>
+    </main>
+
+    <button id="sidebar-toggle" onclick="toggleSidebar()"
+        class="fixed bottom-6 right-6 z-[70] lg:hidden w-14 h-14 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all border border-white/20">☰</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            function loadHTML(id, file) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File not found: " + file);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            loadHTML("header", "header.html");
+            loadHTML("sidebar", "sidebar.html");
+
+        });
+    </script>
+</body>
+
+</html>

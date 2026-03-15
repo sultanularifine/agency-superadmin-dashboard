@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sultanul Arifinee | Web Developer & CEO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            cursor: none;
+        }
+
+        body {
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
+
+        .text-primary {
+            color: #ff4d4d !important;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        /* Cursor */
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #ff4d4d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        #cursor-outline {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 77, 77, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Social Dock */
+        .social-dock {
+            position: fixed;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .dock-item {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            perspective: 1000px;
+        }
+
+        .dock-item:hover {
+            transform: translateX(-10px) rotateY(-20deg) scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .dock-name {
+            position: absolute;
+            right: 65px;
+            background: #ff4d4d;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .dock-item:hover .dock-name {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .dock-item svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Custom Sidebar Scrollbar */
+        #dashboard-sidebar div::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        #dashboard-sidebar div::-webkit-scrollbar-thumb {
+            background: #ff4d4d33;
+            border-radius: 10px;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+    </style>
+</head>
+
+<body class="bg-lightBg dark:bg-darkBg text-slate-900 dark:text-slate-100">
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <div id="canvas-container"></div>
+    <div id="header"></div>
+
+
+    <main class="pt-32 pb-24 px-4 md:px-12 max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
+
+        <div id="sidebar"></div>
+
+        <div class="flex-1 space-y-8">
+
+            <div class="mt-16 mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+    <div>
+        <h3 class="text-xl font-black uppercase tracking-tighter italic text-white">Security <span class="text-primary">Fortress</span></h3>
+        <p class="text-[9px] font-bold uppercase tracking-[0.2em] opacity-40 text-white italic">Active Threat Shield, Encryption Layers, and Identity Protection</p>
+    </div>
+    <div class="flex gap-3">
+        <button class="glass border-red-500/20 bg-red-500/10 px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest text-red-500 hover:bg-red-500 hover:text-white transition-all italic">
+            🛡️ Deep System Scan
+        </button>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <div class="lg:col-span-2 space-y-6">
+        
+        <div class="glass p-1 rounded-[3.5rem] border-white/5 bg-black/60 overflow-hidden shadow-2xl relative">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent opacity-50"></div>
+            <div class="glass rounded-[3.3rem] p-8 relative z-10">
+                <div class="flex justify-between items-center mb-10">
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] italic text-white">Active <span class="text-primary">Firewall</span> Status</h4>
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        <span class="text-[8px] font-black text-green-500 uppercase italic">Encrypted Connection</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 font-mono">
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 group hover:border-red-500/30 transition-all">
+                        <div class="flex gap-4 items-center">
+                            <span class="text-red-500 text-[10px] font-bold">[BLOCKED]</span>
+                            <p class="text-[10px] text-white/60 italic">Suspicious SQL Injection attempt from IP: 182.xx.xx.104</p>
+                        </div>
+                        <span class="text-[8px] text-white/20 uppercase">2m ago</span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 group hover:border-primary/30 transition-all">
+                        <div class="flex gap-4 items-center">
+                            <span class="text-blue-400 text-[10px] font-bold">[VERIFIED]</span>
+                            <p class="text-[10px] text-white/60 italic">Admin Login: Sultanul Arifin (via 2FA/Dhanmondi, Dhaka)</p>
+                        </div>
+                        <span class="text-[8px] text-white/20 uppercase">15m ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass p-8 rounded-[3rem] border-white/5 bg-white/[0.02]">
+                <h5 class="text-[10px] font-black text-white uppercase italic mb-6 tracking-widest">Authentication Security</h5>
+                <div class="space-y-4">
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-[9px] font-bold text-white/60 uppercase italic">Enforce 2FA for Admins</span>
+                        <div class="w-8 h-4 bg-primary/40 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+                    </label>
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-[9px] font-bold text-white/60 uppercase italic">Auto-Logout (30 mins)</span>
+                        <div class="w-8 h-4 bg-primary/40 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+                    </label>
+                </div>
+            </div>
+            <div class="glass p-8 rounded-[3rem] border-white/5 bg-white/[0.02]">
+                <h5 class="text-[10px] font-black text-white uppercase italic mb-6 tracking-widest">API & Data Safety</h5>
+                <div class="space-y-4">
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-[9px] font-bold text-white/60 uppercase italic">Rate Limiting (Throttle)</span>
+                        <div class="w-8 h-4 bg-primary/40 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+                    </label>
+                    <label class="flex items-center justify-between cursor-pointer">
+                        <span class="text-[9px] font-bold text-white/60 uppercase italic">CORS Protection</span>
+                        <div class="w-8 h-4 bg-white/10 rounded-full relative"><div class="absolute left-0.5 top-0.5 w-3 h-3 bg-white/20 rounded-full"></div></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-y-6">
+        
+        <div class="glass p-8 rounded-[3rem] border-primary/20 bg-primary/5 text-center">
+            <p class="text-[8px] font-black uppercase tracking-[0.2em] text-white/30 mb-6 italic">System Health Score</p>
+            <div class="relative inline-block mb-6">
+                <svg class="w-24 h-24 transform -rotate-90">
+                    <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6" fill="transparent" class="text-white/5"></circle>
+                    <circle cx="48" cy="48" r="40" stroke="currentColor" stroke-width="6" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="12.5" class="text-primary"></circle>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-2xl font-black italic text-white">95<span class="text-[10px] opacity-40">%</span></span>
+                </div>
+            </div>
+            <p class="text-[9px] font-bold text-primary uppercase italic">Elite Grade Security</p>
+        </div>
+
+        <div class="glass p-8 rounded-[3rem] border-white/5 bg-white/[0.02]">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-xl">🔒</div>
+                <div>
+                    <p class="text-[10px] font-black text-white uppercase italic tracking-widest">SSL Certificate</p>
+                    <p class="text-[7px] font-bold text-green-500 uppercase italic">Valid & Active</p>
+                </div>
+            </div>
+            <div class="space-y-2 border-t border-white/5 pt-4">
+                <p class="text-[7px] font-black text-white/30 uppercase italic">Issuer: Let's Encrypt Authority</p>
+                <p class="text-[7px] font-black text-white/30 uppercase italic">Expires: June 15, 2026</p>
+            </div>
+        </div>
+
+        <button class="w-full p-6 rounded-[2.5rem] bg-red-600/10 border border-red-600/40 group hover:bg-red-600 transition-all">
+            <p class="text-[10px] font-black text-red-500 uppercase italic tracking-widest group-hover:text-white">Emergency Lockdown</p>
+            <p class="text-[7px] font-bold text-red-500/40 uppercase mt-1 group-hover:text-white/60">Instantly Revoke All Access</p>
+        </button>
+
+    </div>
+</div>
+        </div>
+    </main>
+
+    <button id="sidebar-toggle" onclick="toggleSidebar()"
+        class="fixed bottom-6 right-6 z-[70] lg:hidden w-14 h-14 bg-primary text-white rounded-2xl shadow-2xl flex items-center justify-center text-2xl active:scale-90 transition-all border border-white/20">☰</button>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            function loadHTML(id, file) {
+                fetch(file)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("File not found: " + file);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById(id).innerHTML = data;
+                    })
+                    .catch(error => console.error(error));
+            }
+
+            loadHTML("header", "header.html");
+            loadHTML("sidebar", "sidebar.html");
+
+        });
+    </script>
+</body>
+
+</html>
